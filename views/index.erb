@@ -1,18 +1,23 @@
 <h3>Add a recipe to your Recipe Box</h3>
-<form class="" action="/add_recipe" method="post">
-  <div class="form_group">
-    <label for="type">Type of Recipe</label>
-    <select class="" name="type" type="text">
-      <% @types.each do |type| %>
-      <option value="<%= type.id %>"> <%= type.name %> </option>
-      <% end %>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="name">Recipe Title</label>
-    <input type="text" name="name" class="form-control" placeholder="Recipe Title">
-    <label for="instructions">Instructions</label>
-    <textarea name="instructions" rows="8" cols="80"></textarea>
-  </div>
-  <button type="submit" name="button" class="btn">Add Recipe</button>
-</form>
+<div class="well">
+  <form class="" action="/add_recipe" method="post">
+    <div class="form_group">
+      <label for="type">Type of Recipe</label>
+      <select class="" name="type" type="text">
+        <% @types.each do |type| %>
+        <option value="<%= type.id %>"> <%= type.name %> </option>
+        <% end %>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="name">Recipe Title</label>
+      <input type="text" name="name" class="form-control" placeholder="Recipe Title">
+    </div>
+    <div class="form-group">
+      <label for="instructions">Instructions</label>
+      <textarea name="instructions" rows="8" cols="80"></textarea>
+    </div>
+    <button type="submit" name="button" class="btn">Add Recipe</button>
+  </form>
+
+</div>
