@@ -22,7 +22,7 @@
             <button type="submit" class="btn">Update</button>
           </div>
          </form>
-         <form class="" action="/delete_ingredients" method="post">
+         <form class="" action="/delete_ingredients/<%= @recipe.id %>" method="post">
           <div class="form-group">
             <input type="hidden" name="_method" value="delete">
             <input type="text" name="delete_ingredients" class="form-control">

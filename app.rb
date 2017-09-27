@@ -31,13 +31,13 @@ post("/add_recipe") do
   instructions = params['instructions']
   ingredients = params['ingredients'].split(", ")
   @new_recipe = Recipe.new({name: name, instructions: instructions, type_id: type_id})
-  @new_recipe.save
+  # @new_recipe.save
   # connects ingredients to new_recipe
-  ingredients.each do |ingredient|
-    @new_recipe.ingredients.create({name: ingredient})
-  end
   # binding.pry
   if @new_recipe.save
+    ingredients.each do |ingredient|
+      @new_recipe.ingredients.create({name: ingredient})
+    end
     redirect "recipe_list"
   else
     redirect "/"
@@ -48,7 +48,26 @@ patch("/update_ingredients/:id") do
   ingredients = params['add_ingredients'].split(", ")
   @recipe = Recipe.find(params[:id])
   ingredients.each do |ingredient|
-    @recipe.ingredients.create({name: ingredient})
+    new_ingredient = Ingredient.find_or_initialize_by(name: ingredient)
+    binding.pry
+    if new_ingredient.id
+      @recipe.ingredients.push(new_ingredient)
+    else
+      new_ingredient.save
+      @recipe.ingredients.push(new_ingredient)
+    end
+  end
+  redirect back
+  # add viladatitons where i add
+end
+
+delete("/delete_ingredients/:id") do
+  delete_ingredients = params['delete_ingredients'].split(", ")
+  @recipe = Recipe.find(params[:id])
+  delete_ingredients.each do |ingredient|
+    this_ingredient = Ingredient.find_by name: "#{ingredient}"
+    # binding.pry
+    @recipe.ingredients.destroy(this_ingredient.id)
   end
   redirect back
 end
