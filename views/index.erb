@@ -3,7 +3,7 @@
   <form class="" action="/add_recipe" method="post">
     <div class="form_group">
       <label for="type">Type of Recipe</label>
-      <select class="" name="type" type="text">
+      <select class="" name="type-id" type="text">
         <% @types.each do |type| %>
         <option value="<%= type.id %>"> <%= type.name %> </option>
         <% end %>

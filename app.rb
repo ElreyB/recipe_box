@@ -14,13 +14,18 @@ get("/") do
   erb(:index)
 end
 
+get("/recipe_list") do
+  @recipes = Recipe.all
+  erb(:recipe_list)
+end
+
 post("/add_recipe") do
   type_id = params['type-id']
   name = params['name']
   instructions = params['instructions']
   @new_recipe =Recipe.new({name: name, instructions: instructions, type_id: type_id})
   if @new_recipe.save
-    erb(:recipe_list)
+    redirect "recipe_list"
   else
     redirect "/"
   end
