@@ -19,6 +19,11 @@ get("/recipe_list") do
   erb(:recipe_list)
 end
 
+get("/recipes/:id") do
+  @recipe = Recipe.find(params[:id])
+  erb(:recipes)
+end
+
 post("/add_recipe") do
   type_id = params['type-id']
   name = params['name']
