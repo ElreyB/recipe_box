@@ -21,6 +21,7 @@ end
 
 get("/recipes/:id") do
   @recipe = Recipe.find(params[:id])
+
   erb(:recipes)
 end
 
@@ -28,7 +29,14 @@ post("/add_recipe") do
   type_id = params['type-id']
   name = params['name']
   instructions = params['instructions']
-  @new_recipe =Recipe.new({name: name, instructions: instructions, type_id: type_id})
+  ingredients = params['ingredients'].split(", ")
+  @new_recipe = Recipe.new({name: name, instructions: instructions, type_id: type_id})
+  @new_recipe.save
+  # connects ingredients to new_recipe
+  ingredients.each do |ingredient|
+    @new_recipe.ingredients.create({name: ingredient})
+  end
+  # binding.pry
   if @new_recipe.save
     redirect "recipe_list"
   else

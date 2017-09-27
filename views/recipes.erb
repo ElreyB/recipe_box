@@ -1,9 +1,18 @@
 <div class="row">
   <div class="col-xs-6">
-   <div class="well">
-     <%= @recipe.name %>
-
-     <h3>ingreients</h3>
+   <div class="panel panel-default">
+     <div class="panel-heading">
+       <h2> <%= @recipe.name %> <small>Ingredients</small> </h2>
+     </div>
+     <div class="panel-body">
+       <% if @recipe.ingredients.any? %>
+          <% @recipe.ingredients.each do |ingredient| %>
+          <ul>
+            <li> <%= ingredient.name %> </li>
+          </ul>
+          <% end %>
+       <% end %>
+     </div>
    </div>
   </div>
   <div class="col-xs-6">
