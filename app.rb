@@ -43,3 +43,12 @@ post("/add_recipe") do
     redirect "/"
   end
 end
+
+patch("/update_ingredients/:id") do
+  ingredients = params['add_ingredients'].split(", ")
+  @recipe = Recipe.find(params[:id])
+  ingredients.each do |ingredient|
+    @recipe.ingredients.create({name: ingredient})
+  end
+  redirect back
+end
