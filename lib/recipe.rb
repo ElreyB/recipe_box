@@ -1,5 +1,5 @@
 class Recipe < ActiveRecord::Base
-  belongs_to :dishes
+  belongs_to :dish
   has_and_belongs_to_many :ingredients
 
   validates(:name, {:presence => true})
