@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Search Result</h3>
+  </div>
+  <div class="panel-body">
+    <% if @recipe_results.any? %>
+      <% @recipe_results.each do |recipe| %>
+        <ul>
+          <li><a href="/recipes/<%= recipe.id %>"> <%= recipe.name %> </a></li>
+        </ul>
+      <% end %>
+    <% else %>
+      <p>No search results</p>
+    <% end %>
+  </div>
+</div>

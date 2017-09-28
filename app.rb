@@ -21,7 +21,7 @@ end
 
 get("/recipes/:id") do
   @recipe = Recipe.find(params[:id])
-  
+
   erb(:recipes)
 end
 
@@ -42,6 +42,19 @@ post("/add_recipe") do
     @error_type = @new_recipe
     erb(:errors)
   end
+end
+
+post("/search") do
+  search_item = params['search']
+  @ingredient = Ingredient.find_by_name(search_item)
+  @recipe_results = []
+  @recipes = Recipe.all
+  @recipes.each do |recipe|
+    if recipe.ingredients.include?(@ingredient)
+      @recipe_results.push(recipe)
+    end
+  end
+  erb :search_result
 end
 
 patch("/update_ingredients/:id") do

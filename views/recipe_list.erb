@@ -1,19 +1,44 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Recipes</h3>
+<nav class="navbar navbar-default">
+  <div class="nav nav-justified navbar-nav">
+    <form class="navbar-form navbar-search" role="search" action="/search" method="post">
+        <div class="input-group">
+          <input type="text" name="search" class="form-control">
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-search btn-danger">
+                <span class="glyphicon glyphicon-search"></span>
+                <span class="label-icon">Search by ingredients</span>
+              </button>
+            </div>
+        </div>
+    </form>
   </div>
-  <div class="panel-body">
-    <% if @recipes.any? %>
-      <% @recipes.each do |recipe| %>
-        <ul>
-          <li><a href="/recipes/<%= recipe.id %>"> <%= recipe.name %> </a></li>
-        </ul>
-      <% end %>
-    <% else %>
-      <p>There are no recipe currently in your box.</p>
-    <% end %>
+</nav>
+
+<div class="row">
+  <div class="col-xs-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">All recipes:</h3>
+      </div>
+      <div class="panel-body">
+        <% if @recipes.any? %>
+          <% @recipes.each do |recipe| %>
+            <ul>
+              <li><a href="/recipes/<%= recipe.id %>"> <%= recipe.name %> </a></li>
+            </ul>
+          <% end %>
+        <% else %>
+          <p>There are no recipe currently in your box.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-6">
+    
   </div>
 </div>
+
+
 
 <footer>
   <a href="/"><button type="button" name="button" class="btn">Home</button></a>
