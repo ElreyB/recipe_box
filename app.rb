@@ -30,8 +30,9 @@ post("/add_recipe") do
   name = params['name']
   instructions = params['instructions']
   rating = params['rating']
+  image = params['fileToUpload']
   ingredients = params['ingredients'].split(", ")
-  @new_recipe = Recipe.new({name: name, instructions: instructions, dish_id: dish_id, rate_id: rating})
+  @new_recipe = Recipe.new({name: name, instructions: instructions, dish_id: dish_id, rate_id: rating, photo: image})
   # connects ingredients to new_recipe
   # binding.pry
   if @new_recipe.save
@@ -58,13 +59,26 @@ post("/search") do
   erb :search_result
 end
 
+patch("/add_tag/:id") do
+  @recipe = Recipe.find(params[:id])
+  tag = params['add_tag']
+  new_tag = Tag.find_or_initialize_by(name: tag)
+  if new_tag.id
+    @recipe.tags.push(new_tag)
+  else
+    new_tag.save
+    @recipe.tags.push(new_tag)
+  end
+  redirect back
+end
+
 patch("/update_ingredients/:id") do
   ingredients = params['add_ingredients'].split(", ")
   @recipe = Recipe.find(params[:id])
   ingredients.each do |ingredient|
     new_ingredient = Ingredient.find_or_initialize_by(name: ingredient)
-    if new_ingredient.id
-      @recipe.ingredients.push(new_ingredient)
+    if new_ingredient.id && @recipe.ingredients.push(new_ingredient)
+
     else
       new_ingredient.save
       @recipe.ingredients.push(new_ingredient)

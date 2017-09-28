@@ -24,6 +24,9 @@
     $('.stars').stars();
 
     </script>
+    <div class="image">
+      <img src="/img/<%= @recipe.photo %>" alt="image" class="img-thumbnail">
+    </div>
 
 <div class="row">
   <div class="col-xs-6">
@@ -58,8 +61,9 @@
           </div>
          </form>
 
-         <form class="" action="/add_tag" method="post">
+         <form class="" action="/add_tag/<%= @recipe.id %>" method="post">
           <div class="form-group">
+            <input type="hidden" name="_method" value="patch">
             <input type="hidden" name="_method" value="patch">
             <input type="text" name="add_tag" class="form-control">
             <button type="submit" class="btn">Add Tag</button>
@@ -69,7 +73,12 @@
        </div>
      </div>
      <div class="panel-footer">
-       <h4>Tags: tag1, tag2, etc.</h4>
+       <h4>Tags :</h4>
+      <% if @recipe.tags.any? %>
+        <% @recipe.tags.each do |tag| %>
+          <%= tag.name %>
+        <% end %>
+      <% end %>
      </div>
    </div>
   </div>
