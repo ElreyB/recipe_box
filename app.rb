@@ -49,7 +49,6 @@ patch("/update_ingredients/:id") do
   @recipe = Recipe.find(params[:id])
   ingredients.each do |ingredient|
     new_ingredient = Ingredient.find_or_initialize_by(name: ingredient)
-    binding.pry
     if new_ingredient.id
       @recipe.ingredients.push(new_ingredient)
     else
@@ -66,7 +65,6 @@ delete("/delete_ingredients/:id") do
   @recipe = Recipe.find(params[:id])
   delete_ingredients.each do |ingredient|
     this_ingredient = Ingredient.find_by name: "#{ingredient}"
-    # binding.pry
     @recipe.ingredients.destroy(this_ingredient.id)
   end
   redirect back

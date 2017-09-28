@@ -14,19 +14,19 @@
           </ul>
           <% end %>
        <% end %>
-       <div class="edit-ingredients">
+       <div class="edit-ingredients hide">
          <form class="" action="/update_ingredients/<%= @recipe.id %>" method="post">
           <div class="form-group">
             <input type="hidden" name="_method" value="patch">
             <input type="text" name="add_ingredients" class="form-control">
-            <button type="submit" class="btn">Update</button>
+            <button type="submit" class="btn">Add Ingredient</button>
           </div>
          </form>
          <form class="" action="/delete_ingredients/<%= @recipe.id %>" method="post">
           <div class="form-group">
             <input type="hidden" name="_method" value="delete">
             <input type="text" name="delete_ingredients" class="form-control">
-            <button type="submit" class="btn">Delete</button>
+            <button type="submit" class="btn">Delete Ingredient</button>
           </div>
          </form>
        </div>
