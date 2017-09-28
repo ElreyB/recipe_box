@@ -29,8 +29,9 @@ post("/add_recipe") do
   dish_id = params['dish-id']
   name = params['name']
   instructions = params['instructions']
+  rating = params['rating']
   ingredients = params['ingredients'].split(", ")
-  @new_recipe = Recipe.new({name: name, instructions: instructions, dish_id: dish_id})
+  @new_recipe = Recipe.new({name: name, instructions: instructions, dish_id: dish_id, rate_id: rating})
   # connects ingredients to new_recipe
   # binding.pry
   if @new_recipe.save
