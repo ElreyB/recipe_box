@@ -77,8 +77,10 @@ patch("/update_ingredients/:id") do
   @recipe = Recipe.find(params[:id])
   ingredients.each do |ingredient|
     new_ingredient = Ingredient.find_or_initialize_by(name: ingredient)
-    if new_ingredient.id && @recipe.ingredients.push(new_ingredient)
-
+    if new_ingredient.id
+      if !@recipe.ingredients.include?(new_ingredient)
+        @recipe.ingredients.push(new_ingredient)
+      end
     else
       new_ingredient.save
       @recipe.ingredients.push(new_ingredient)
