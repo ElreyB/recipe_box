@@ -1,8 +1,10 @@
-<h3>Oops there were some errors:</h3>
-<ul>
-  <% @error_type.errors().full_messages().each() do |message| %>
-    <li><%= message %></li>
-  <% end %>
-</ul>
+<div class="jumbotron error-container">
+  <h2 class="error-title">Oops there were some errors:</h2>
+  <ol class="error-list">
+    <% @error_type.errors().full_messages().each() do |message| %>
+      <h3><li><%= message %></li></h3>
+    <% end %>
+  </ol>
 
-<h5><a href="/" >Return to main page to try again</a></h5>
+  <h5><a href="/"><button type="button" class="btn">Return Home</button></a></h5>
+</div>

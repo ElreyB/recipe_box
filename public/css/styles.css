@@ -1,0 +1,14 @@
+.error-container {
+  text-align: center;
+  background-color: #000602;
+}
+
+.error-title {
+  color: #e90613;
+}
+
+ol.error-list{
+  display: inline-block;
+  text-align:left;
+  color: #fefefe;
+}
