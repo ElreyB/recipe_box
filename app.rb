@@ -31,7 +31,6 @@ post("/add_recipe") do
   instructions = params['instructions']
   ingredients = params['ingredients'].split(", ")
   @new_recipe = Recipe.new({name: name, instructions: instructions, type_id: type_id})
-  # @new_recipe.save
   # connects ingredients to new_recipe
   # binding.pry
   if @new_recipe.save
@@ -40,7 +39,8 @@ post("/add_recipe") do
     end
     redirect "recipe_list"
   else
-    redirect "/"
+    @error_type = @new_recipe
+    erb(:errors)
   end
 end
 
