@@ -1,34 +1,20 @@
-<script type="text/javascript">(function(d, t, e, m){
-
-    // Async Rating-Widget initialization.
-    window.RW_Async_Init = function(){
-
-        RW.init({
-            huid: "376181",
-            uid: "015a90b42294b238f54ce633a7dc2aaa",
-            options: { "style": "oxygen" }
-        });
-        RW.render();
-    };
-        // Append Rating-Widget JavaScript library.
-    var rw, s = d.getElementsByTagName(e)[0], id = "rw-js",
-        l = d.location, ck = "Y" + t.getFullYear() +
-        "M" + t.getMonth() + "D" + t.getDate(), p = l.protocol,
-        f = ((l.search.indexOf("DBG=") > -1) ? "" : ".min"),
-        a = ("https:" == p ? "secure." + m + "js/" : "js." + m);
-    if (d.getElementById(id)) return;
-    rw = d.createElement(e);
-    rw.id = id; rw.async = true; rw.type = "text/javascript";
-    rw.src = p + "//" + a + "external" + f + ".js?ck=" + ck;
-    s.parentNode.insertBefore(rw, s);
-    }(document, new Date(), "script", "rating-widget.com/"));</script>
-
+<div class='movie_choice'>
+    <p>Rate this recipe</p>
+    <div id="r1" class="rate_widget">
+        <div class="star_1 ratings_stars"></div>
+        <div class="star_2 ratings_stars"></div>
+        <div class="star_3 ratings_stars"></div>
+        <div class="star_4 ratings_stars"></div>
+        <div class="star_5 ratings_stars"></div>
+        <div class="total_votes">vote data</div>
+    </div>
+</div>
 
 <div class="row">
   <div class="col-xs-6">
    <div class="panel panel-default">
      <div class="panel-heading">
-       <h2> <%= @recipe.name %> <div class="rw-ui-container"></div> </h2>
+       <h2> <%= @recipe.name %>  </h2>
      </div>
      <div class="panel-body">
        <button type="button" class="btn edit">Edit</button>
@@ -57,13 +43,29 @@
           </div>
          </form>
 
+         <form class="" action="/add_tag" method="post">
+          <div class="form-group">
+            <input type="hidden" name="_method" value="patch">
+            <input type="text" name="add_tag" class="form-control">
+            <button type="submit" class="btn">Add Tag</button>
+          </div>
+         </form>
+
        </div>
+     </div>
+     <div class="panel-footer">
+       <h4>Tags: tag1, tag2, etc.</h4>
      </div>
    </div>
   </div>
   <div class="col-xs-6">
-    <div class="well">
-      <%= @recipe.instructions %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+         <h4>Instructions</h4>
+      </div>
+      <div class="panel-body">
+        <%= @recipe.instructions %>
+      </div>
     </div>
   </div>
 </div>
