@@ -4,13 +4,13 @@ Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 require 'pry'
 
-types = ["Veggie", "Chicken", "Seafood", "Beef", "Lamb"]
-types.each do |type|
-  Type.create({name: type})
+dishes = ["Veggie", "Chicken", "Seafood", "Beef", "Lamb"]
+dishes.each do |dish|
+  Dish.create({name: dish})
 end
 
 get("/") do
-  @types = Type.all
+  @dishes = Dish.all
   erb(:index)
 end
 
@@ -21,16 +21,16 @@ end
 
 get("/recipes/:id") do
   @recipe = Recipe.find(params[:id])
-
+  
   erb(:recipes)
 end
 
 post("/add_recipe") do
-  type_id = params['type-id']
+  dish_id = params['dish-id']
   name = params['name']
   instructions = params['instructions']
   ingredients = params['ingredients'].split(", ")
-  @new_recipe = Recipe.new({name: name, instructions: instructions, type_id: type_id})
+  @new_recipe = Recipe.new({name: name, instructions: instructions, dish_id: dish_id})
   # connects ingredients to new_recipe
   # binding.pry
   if @new_recipe.save
