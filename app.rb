@@ -4,13 +4,13 @@ Bundler.require(:default)
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
 require 'pry'
 
-types = ["Veggie", "Chicken", "Seafood", "Beef", "Lamb"]
-types.each do |type|
-  Type.create({name: type})
+dishes = ["Veggie", "Chicken", "Seafood", "Beef", "Lamb"]
+dishes.each do |dish|
+  Dish.create({name: dish})
 end
 
 get("/") do
-  @types = Type.all
+  @dishes = Dish.all
   erb(:index)
 end
 
@@ -26,12 +26,13 @@ get("/recipes/:id") do
 end
 
 post("/add_recipe") do
-  type_id = params['type-id']
+  dish_id = params['dish-id']
   name = params['name']
   instructions = params['instructions']
+  rating = params['rating']
+  image = params['fileToUpload']
   ingredients = params['ingredients'].split(", ")
-  @new_recipe = Recipe.new({name: name, instructions: instructions, type_id: type_id})
-  # @new_recipe.save
+  @new_recipe = Recipe.new({name: name, instructions: instructions, dish_id: dish_id, rate_id: rating, photo: image})
   # connects ingredients to new_recipe
   # binding.pry
   if @new_recipe.save
@@ -40,8 +41,35 @@ post("/add_recipe") do
     end
     redirect "recipe_list"
   else
-    redirect "/"
+    @error_type = @new_recipe
+    erb(:errors)
   end
+end
+
+post("/search") do
+  search_item = params['search']
+  @ingredient = Ingredient.find_by_name(search_item)
+  @recipe_results = []
+  @recipes = Recipe.all
+  @recipes.each do |recipe|
+    if recipe.ingredients.include?(@ingredient)
+      @recipe_results.push(recipe)
+    end
+  end
+  erb :search_result
+end
+
+patch("/add_tag/:id") do
+  @recipe = Recipe.find(params[:id])
+  tag = params['add_tag']
+  new_tag = Tag.find_or_initialize_by(name: tag)
+  if new_tag.id
+    @recipe.tags.push(new_tag)
+  else
+    new_tag.save
+    @recipe.tags.push(new_tag)
+  end
+  redirect back
 end
 
 patch("/update_ingredients/:id") do
@@ -49,9 +77,10 @@ patch("/update_ingredients/:id") do
   @recipe = Recipe.find(params[:id])
   ingredients.each do |ingredient|
     new_ingredient = Ingredient.find_or_initialize_by(name: ingredient)
-    binding.pry
     if new_ingredient.id
-      @recipe.ingredients.push(new_ingredient)
+      if !@recipe.ingredients.include?(new_ingredient)
+        @recipe.ingredients.push(new_ingredient)
+      end
     else
       new_ingredient.save
       @recipe.ingredients.push(new_ingredient)
@@ -66,7 +95,6 @@ delete("/delete_ingredients/:id") do
   @recipe = Recipe.find(params[:id])
   delete_ingredients.each do |ingredient|
     this_ingredient = Ingredient.find_by name: "#{ingredient}"
-    # binding.pry
     @recipe.ingredients.destroy(this_ingredient.id)
   end
   redirect back

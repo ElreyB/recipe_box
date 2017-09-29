@@ -1,8 +1,10 @@
 class Recipe < ActiveRecord::Base
-  belongs_to :type
+  belongs_to :dish
+  has_and_belongs_to_many :tags
   has_and_belongs_to_many :ingredients
 
-  before_save(:capitalizes_name)
+  validates(:name, {:presence => true})
+  before_save(:capitalizes_name, {})
 
   private
 

@@ -1,8 +1,38 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+<span class="stars" data-rating="<%=@recipe.rate_id%>" data-num-stars="5" ></span>
+
+<script>
+    $.fn.stars = function() {
+        return $(this).each(function() {
+
+            var rating = $(this).data("rating");
+
+            var numStars = $(this).data("numStars");
+
+            var fullStar = new Array(Math.floor(rating + 1)).join('<i class="fa fa-star"></i>');
+
+            var halfStar = ((rating%1) !== 0) ? '<i class="fa fa-star-half-empty"></i>': '';
+
+            var noStar = new Array(Math.floor(numStars + 1 - rating)).join('<i class="fa fa-star-o"></i>');
+
+            $(this).html(fullStar + halfStar + noStar);
+
+        });
+    }
+
+    $('.stars').stars();
+
+    </script>
+    <div class="image">
+      <img src="/img/<%= @recipe.photo %>" alt="image" class="img-thumbnail">
+    </div>
+
 <div class="row">
   <div class="col-xs-6">
    <div class="panel panel-default">
      <div class="panel-heading">
-       <h2> <%= @recipe.name %> <small> <%= @recipe.type.name %> </small> </h2>
+       <h2> <%= @recipe.name %>  </h2>
      </div>
      <div class="panel-body">
        <button type="button" class="btn edit">Edit</button>
@@ -14,28 +44,52 @@
           </ul>
           <% end %>
        <% end %>
-       <div class="edit-ingredients">
+       <div class="edit-ingredients hide">
          <form class="" action="/update_ingredients/<%= @recipe.id %>" method="post">
           <div class="form-group">
             <input type="hidden" name="_method" value="patch">
             <input type="text" name="add_ingredients" class="form-control">
-            <button type="submit" class="btn">Update</button>
+            <button type="submit" class="btn">Add Ingredient</button>
           </div>
          </form>
+
          <form class="" action="/delete_ingredients/<%= @recipe.id %>" method="post">
           <div class="form-group">
             <input type="hidden" name="_method" value="delete">
             <input type="text" name="delete_ingredients" class="form-control">
-            <button type="submit" class="btn">Delete</button>
+            <button type="submit" class="btn">Delete Ingredient</button>
           </div>
          </form>
+
+         <form class="" action="/add_tag/<%= @recipe.id %>" method="post">
+          <div class="form-group">
+            <input type="hidden" name="_method" value="patch">
+            <input type="hidden" name="_method" value="patch">
+            <input type="text" name="add_tag" class="form-control">
+            <button type="submit" class="btn">Add Tag</button>
+          </div>
+         </form>
+
        </div>
+     </div>
+     <div class="panel-footer">
+       <h4>Tags :</h4>
+      <% if @recipe.tags.any? %>
+        <% @recipe.tags.each do |tag| %>
+          <%= tag.name %>
+        <% end %>
+      <% end %>
      </div>
    </div>
   </div>
   <div class="col-xs-6">
-    <div class="well">
-      <%= @recipe.instructions %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+         <h4>Instructions</h4>
+      </div>
+      <div class="panel-body">
+        <%= @recipe.instructions %>
+      </div>
     </div>
   </div>
 </div>

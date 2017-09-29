@@ -1,6 +1,21 @@
+<nav class="navbar navbar-default">
+  <div class="nav nav-justified navbar-nav">
+    <form class="navbar-form navbar-search" role="search" action="/search" method="post">
+        <div class="input-group">
+          <input type="text" name="search" class="form-control">
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-search btn-danger">
+                <span class="glyphicon glyphicon-search"></span>
+                <span class="label-icon">Search by ingredients</span>
+              </button>
+            </div>
+        </div>
+    </form>
+  </div>
+</nav>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Recipes</h3>
+    <h3 class="panel-title">All recipes:</h3>
   </div>
   <div class="panel-body">
     <% if @recipes.any? %>
@@ -14,6 +29,8 @@
     <% end %>
   </div>
 </div>
+
+
 
 <footer>
   <a href="/"><button type="button" name="button" class="btn">Home</button></a>
